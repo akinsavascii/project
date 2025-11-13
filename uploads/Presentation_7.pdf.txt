@@ -1,0 +1,166 @@
+Yapay Zeka Tabanlı Sağlık
+Uygulamaları
+
+Mehmet Akın Savaşçı
+
+Yapay Zeka Nedir?
+
+* Yapay zeka, bilgisayarların insan gibi düşünebilmesini,
+öğrenmesini ve karar verebilmesini sağlayan teknolojidir.
+
+* Temel amaç, makinelerin insanlar gibi deneyimden öğrenmesini
+ve kendi kendine geliştirilmesini sağlamaktır.
+
+* Bugün yapay zeka tıp, mühendislik, ulaşım, eğitim ve daha birçok
+alanda aktif olarak kullanılmaktadır.
+
+* Sağlıkta ise yapay zeka, hem hasta verilerinin analizinde hem de
+teşhis süreçlerinde büyük kolaylık sağlar.
+
+Machine Learning (Makine Öğrenmesi)
+Nedir?
+* Makine öğrenmesi, yapay zekanın bir alt alanıdır.
+
+* Bilgisayarlara açıkça programlanmadan, verilerden öğrenme ve
+tahmin yapma yeteneği kazandırır.
+
+* Bir model binlerce örnek veriyi inceler, örüntüleri keşfeder ve bu
+örüntülerden “deneyim” kazanır.
+
+* Örneğin binlerce hastanın tansiyon, kolesterol ve yaş bilgilerini
+analiz eden bir model, yeni gelen bir hastanın kalp hastalığı riski
+olup olmadığını tahmin edebilir.
+
+Makine Öğrenmesi Nasıl Hazırlanır?
+
+Bir makine öğrenmesi sistemi geliştirmek için belirli aşamalardan geçilir:
+
+1. Veri Toplama:
+
+Modelin öğrenebilmesi için geniş ve doğru veri gerekir.
+
+Sağlıkta bu veriler laboratuvar sonuçları, sensör kayıtları, MR görüntüleri veya hasta geçmişi olabilir.
+2. Veri Temizleme ve Ön İşleme:
+
+Toplanan veriler genellikle hatalı, eksik veya farklı formatlardadır.
+
+Bu yüzden veriler filtrelenir, eksik değerler tamamlanır ve analiz için sayısal hale getirilir.
+
+3. Model Seçimi:
+
+Probleme uygun algoritma seçilir.
+
+Örneğin sınıflandırma problemleri için Random Forest, görüntü analizleri için Convolutional Neural Network (CNN) tercih
+edilir.
+
+4. Model Eğitimi:
+
+Model, verilerdeki örüntüleri tanıyabilmesi için defalarca veriyle beslenir.
+Her turda hatalarını ölçer ve kendini geliştirir.
+
+5. Test ve Değerlendirme:
+
+Eğitim tamamlandığında model, hiç görmediği verilerle test edilir.
+
+Doğruluk, hata oranı ve performans ölçülür.
+Kısaca süreç şu şekildedir:
+
+Veri > Temizleme > Model > Eğitim > Test» Sonuç
+
+Sağlıkta Makine Öğrenmesi Kullanım
+Alanları
+
+Makine öğrenmesi, sağlık alanında birçok farklı amaca hizmet eder:
+
+Hastalık Tahmini:
+* Hasta verilerinden risk analizi yapılır. Örneğin, kalp hastalığı veya diyabet riski tahmin edilir.
+
+Tıbbi Görüntü Analizi:
+
+l Derin öğrenme modelleri MR, X-ray veya CT görüntülerinde tümör ve anormallikleri tespit
+eder.
+
+İlaç Keşfi:
+
+» Yeniilaçların etkileri, genetik verilerden ve geçmiş klinik sonuçlardan tahmin edilebilir.
+
+Hasta Takibi ve Mobil Sağlık:
+
+* Akıllı saatlerden alınan kalp atışı, uyku veya aktivite verileri analiz edilerek kişisel sağlık
+önerileri oluşturulur.
+
+Örnek Uygulama: Kalp Hastalığı Tahmini
+
+* Bu projede amaç, kalp hastalığı riskini makine öğrenmesiyle
+tahmin etmektir.
+
+* Kullanılan veri setinde yaş, cinsiyet, tansiyon, kolesterol, nabız gibi
+bilgiler yer alır.
+
+* Model bu verilerden “risk faktörlerini” öğrenir.
+
+* Yeni bir hastanın bilgileri girildiğinde model, o kişinin kalp hastalığı
+riski taşıyıp taşımadığını yüksek doğrulukla tahmin eder.
+
+* Bu sistem doktorlara yardımcı olur, erken teşhis oranını artırır ve
+insan hatasını azaltır.
+
+Deneysel Veriler ve Mühendislik Alanlarıyla
+Entegrasyon
+
+Yapay zekanın başarısı büyük ölçüde deneysel verilerin kalitesine bağlıdır.
+Her mühendislik alanının kendine özgü veri tipleri ve cihazları vardır.
+
+Örneğin:
+
+* Biyomedikal mühendisleri sensör verileri (EKG, EEG) toplar.
+
+* Elektronik mühendisleri sinyal işleme cihazları kullanır.
+
+* Bilgisayar mühendisleri bu verileri analiz edip modele besler.
+
+Bu süreçte şu adımlar önemlidir:
+
+»* Veri Tipi Analizi: Hangi veri türü kullanılacak (sayısal, görüntü, zaman serisi vb.)
+
+» Standartlaştırma: Verilerin formatını ortak hale getirme (örneğin DICOM formatı, JSON, CSV/)
+
+»* Yapay Zekaya Entegrasyon: Verileri modelin anlayacağı biçimde dönüştürme
+
+* Çıktı Raporlama: Sonuçları görselleştirip anlaşılır hale getirme (grafikler, istatistiksel özetler, raporlar)
+
+Bu şekilde farklı mühendislik alanları birlikte çalışarak disiplinlerarası çözümler üretir.
+
+Disiplinlerarası Çalışma Örneği
+
+Bir sağlık projesinde mühendislik alanlarının katkısı şu şekilde olabilir:
+
+* Bilgisayar Mühendisliği: Veri analizi, algoritma tasarımı ve model eğitimi
+
+. Elektrik-Elektronik Mühendisliği: Sensör sistemleri, sinyal toplama ve veri
+aktarımı
+
+* Biyomedikal Mühendisliği: Hasta verilerinin toplanması, medikal cihazların
+entegrasyonu
+
+* Yazılım Mühendisliği: Uygulama geliştirme ve kullanıcı arayüzü
+
+Bu alanlar birleştiğinde, bir yapay zeka sistemi hem veri toplar, hem analiz eder,
+hem de sonuçları anlamlı bir biçimde sunar.
+
+Elde Edilen Sonuçlar ve Faydalar
+
+Makine öğrenmesi ve yapay zeka tabanlı sistemler:
+
+* Erken teşhiste yüksek başarı sağlar.
+
+* Hata oranlarını azaltır.
+
+* Doktorların karar süreçlerini hızlandırır.
+
+* Hastane kaynaklarının verimli kullanılmasını sağlar.
+
+* Kişiye özel tedavi planları geliştirilmesine olanak tanır.
+
+Bu sistemler insan hatasını azaltarak sağlık hizmetlerinde güvenilirliği
+artırır.
