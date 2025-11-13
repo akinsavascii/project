@@ -1,15 +1,18 @@
 import os
 import tempfile
 from PIL import Image
-import google.generativeai as genai
+from dotenv import load_dotenv
+
+load_dotenv()
 
 GEMINI_KEY = os.getenv('GEMINI_API_KEY')
 
 def _ocr_with_gemini(image_path):
     if not GEMINI_KEY:
-        raise Exception("GEMINI_API_KEY not set. OCR requires Gemini API.")
+        raise Exception("GEMINI_API_KEY not set. Please add it to environment variables or .env file.")
     
     try:
+        import google.generativeai as genai
         genai.configure(api_key=GEMINI_KEY)
         model = genai.GenerativeModel('gemini-2.0-flash-exp')
         
@@ -20,6 +23,7 @@ def _ocr_with_gemini(image_path):
         return response.text.strip()
     except Exception as e:
         raise Exception(f"Gemini OCR failed: {str(e)}")
+
 
 def pdf_to_text(pdf_path, dpi=200):
     try:
