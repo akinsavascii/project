@@ -4,7 +4,8 @@ import tempfile
 from pdf2image import convert_from_path
 from PIL import Image
 
-TESSERACT_PATH = '/opt/homebrew/bin/tesseract'
+TESSERACT_PATH = os.getenv('TESSERACT_PATH', '/opt/homebrew/bin/tesseract')
+POPPLER_PATH = os.getenv('POPPLER_PATH', '/opt/homebrew/bin')
 
 def _tesseract_ocr(image_obj, lang='tur'):
     with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as tmp:
@@ -26,7 +27,7 @@ def _tesseract_ocr(image_obj, lang='tur'):
             os.unlink(tmp_path)
 
 def pdf_to_text(pdf_path, dpi=200):
-    pages = convert_from_path(pdf_path, dpi=dpi, poppler_path='/opt/homebrew/bin')
+    pages = convert_from_path(pdf_path, dpi=dpi, poppler_path=POPPLER_PATH if POPPLER_PATH != '/opt/homebrew/bin' else None)
     texts = []
     for i, page in enumerate(pages):
         text = _tesseract_ocr(page, lang='tur')
