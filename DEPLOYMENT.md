@@ -30,7 +30,7 @@ git push origin main
 - **Runtime:** Python 3
 - **Build Command:** 
   ```bash
-  apt-get update && apt-get install -y tesseract-ocr tesseract-ocr-tur poppler-utils && pip install -r requirements.txt
+  pip install -r requirements.txt
   ```
 - **Start Command:** 
   ```bash
@@ -74,8 +74,9 @@ POPPLER_PATH=/usr/bin
 
 ⚠️ **Tesseract ve Poppler:**
 - Render'ın Ubuntu tabanlı sistemi kullanılıyor
-- Build command'da otomatik olarak yükleniyor
+- `Aptfile` dosyasıyla otomatik olarak yükleniyor
 - Türkçe dil paketi (`tesseract-ocr-tur`) dahil
+- Aptfile'da şu paketler tanımlı: `tesseract-ocr`, `tesseract-ocr-tur`, `poppler-utils`
 
 ## Test Etme
 
