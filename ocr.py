@@ -4,10 +4,10 @@ import tempfile
 from pdf2image import convert_from_path
 from PIL import Image
 
-TESSERACT_PATH = '/opt/homebrew/bin/tesseract'
+TESSERACT_PATH = os.getenv('TESSERACT_PATH', '/opt/homebrew/bin/tesseract')
+POPPLER_PATH = os.getenv('POPPLER_PATH', '/opt/homebrew/bin')
 
 def _tesseract_ocr(image_obj, lang='tur'):
-    """Call tesseract directly via subprocess to avoid pytesseract PATH issues."""
     with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as tmp:
         image_obj.save(tmp.name)
         tmp_path = tmp.name
@@ -27,8 +27,7 @@ def _tesseract_ocr(image_obj, lang='tur'):
             os.unlink(tmp_path)
 
 def pdf_to_text(pdf_path, dpi=200):
-    """Convert each PDF page to image and run OCR, returning concatenated text."""
-    pages = convert_from_path(pdf_path, dpi=dpi, poppler_path='/opt/homebrew/bin')
+    pages = convert_from_path(pdf_path, dpi=dpi, poppler_path=POPPLER_PATH if POPPLER_PATH != '/opt/homebrew/bin' else None)
     texts = []
     for i, page in enumerate(pages):
         text = _tesseract_ocr(page, lang='tur')

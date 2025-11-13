@@ -3,9 +3,7 @@ import subprocess
 import tempfile
 
 def text_to_pdf(text, out_path):
-    """Convert text to PDF using wkhtmltopdf or libreoffice for proper Unicode support."""
     
-    # Method 1: Try wkhtmltopdf (fast, good for text)
     try:
         html_content = f"""
 <!DOCTYPE html>
@@ -38,7 +36,6 @@ def text_to_pdf(text, out_path):
             html_path = f.name
         
         try:
-            # Try wkhtmltopdf
             result = subprocess.run(
                 ['which', 'wkhtmltopdf'],
                 capture_output=True,
@@ -55,7 +52,6 @@ def text_to_pdf(text, out_path):
         except:
             pass
         
-        # Try libreoffice (macOS often has it)
         try:
             subprocess.run(
                 ['libreoffice', '--headless', '--convert-to', 'pdf', '--outdir', os.path.dirname(out_path), html_path],
@@ -75,7 +71,5 @@ def text_to_pdf(text, out_path):
         if os.path.exists(html_path):
             os.unlink(html_path)
     
-    # Fallback: Save as plaintext with .pdf extension
-    # This is readable as text but not a true PDF
     with open(out_path, 'w', encoding='utf-8') as f:
         f.write(text)

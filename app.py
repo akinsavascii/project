@@ -40,7 +40,6 @@ def upload():
         save_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(save_path)
 
-        # OCR
         ext = filename.rsplit('.', 1)[1].lower()
         try:
             if ext == 'pdf':
@@ -50,26 +49,22 @@ def upload():
         except Exception as e:
             return jsonify({'error': 'OCR failed', 'details': str(e)}), 500
 
-        # save extracted text
         txt_name = filename + '.txt'
         txt_path = os.path.join(app.config['UPLOAD_FOLDER'], txt_name)
         with open(txt_path, 'w', encoding='utf-8') as f:
             f.write(text)
 
-        # Summarize (use OpenAI if API key configured, otherwise fallback)
         short = request.form.get('length', 'short')
         try:
             summary = summarize_text(text, mode=short)
         except Exception as e:
             return jsonify({'error': 'Summarization failed', 'details': str(e)}), 500
 
-        # save summary
         summary_filename = filename + '.summary.txt'
         summary_path = os.path.join(SUMMARY_FOLDER, summary_filename)
         with open(summary_path, 'w', encoding='utf-8') as f:
             f.write(summary)
 
-        # Return summary text to frontend (for browser-based PDF generation)
         download_url = url_for('download_summary', filename=summary_filename)
         return jsonify({
             'text_file': txt_name, 

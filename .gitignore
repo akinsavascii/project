@@ -136,6 +136,13 @@ ENV/
 env.bak/
 venv.bak/
 
+# Project specific
+uploads/*
+!uploads/.gitkeep
+summaries/*
+!summaries/.gitkeep
+.DS_Store
+
 # Spyder project settings
 .spyderproject
 .spyproject
