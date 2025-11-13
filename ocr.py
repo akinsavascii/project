@@ -14,13 +14,32 @@ def _ocr_with_gemini(image_path):
     try:
         import google.generativeai as genai
         genai.configure(api_key=GEMINI_KEY)
-        model = genai.GenerativeModel('gemini-2.0-flash-exp')
+        
+        # Try multiple models in order of preference
+        models_to_try = [
+            'gemini-2.5-flash-live',
+            'models/gemini-2.5-flash-live',
+            'gemini-1.5-flash',
+            'models/gemini-1.5-flash',
+        ]
         
         img = Image.open(image_path)
-        
         prompt = "Bu görseldeki tüm metni çıkar. Sadece metni ver, başka bir şey ekleme."
-        response = model.generate_content([prompt, img])
-        return response.text.strip()
+        
+        last_error = None
+        for model_name in models_to_try:
+            try:
+                print(f"Trying OCR with model: {model_name}")
+                model = genai.GenerativeModel(model_name)
+                response = model.generate_content([prompt, img])
+                print(f"✓ OCR successful with model: {model_name}")
+                return response.text.strip()
+            except Exception as e:
+                print(f"Model {model_name} failed: {str(e)}")
+                last_error = e
+                continue
+        
+        raise Exception(f"All OCR models failed. Last error: {str(last_error)}")
     except Exception as e:
         raise Exception(f"Gemini OCR failed: {str(e)}")
 
