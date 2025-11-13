@@ -7,8 +7,9 @@ import shutil
 
 def _get_tesseract_path():
     tesseract_path = os.getenv('TESSERACT_PATH')
-    if tesseract_path and os.path.exists(tesseract_path):
-        return tesseract_path
+    if tesseract_path:
+        if os.path.exists(tesseract_path):
+            return tesseract_path
     
     which_result = shutil.which('tesseract')
     if which_result:
@@ -23,12 +24,12 @@ def _get_tesseract_path():
         if os.path.exists(path):
             return path
     
-    return 'tesseract'
+    return '/usr/bin/tesseract'
 
 try:
     TESSERACT_PATH = _get_tesseract_path()
 except Exception:
-    TESSERACT_PATH = 'tesseract'
+    TESSERACT_PATH = '/usr/bin/tesseract'
 
 POPPLER_PATH = os.getenv('POPPLER_PATH', None)
 
