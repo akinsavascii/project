@@ -38,8 +38,9 @@ def _tesseract_ocr(image_obj, lang='tur'):
         tmp_path = tmp.name
     
     try:
+        cmd = [TESSERACT_PATH, tmp_path, 'stdout', '-l', lang]
         result = subprocess.run(
-            [TESSERACT_PATH, tmp_path, 'stdout', '-l', lang],
+            cmd,
             capture_output=True,
             text=True,
             timeout=30
@@ -47,6 +48,8 @@ def _tesseract_ocr(image_obj, lang='tur'):
         if result.returncode != 0:
             raise Exception(f"Tesseract error: {result.stderr}")
         return result.stdout.strip()
+    except FileNotFoundError:
+        raise Exception(f"Tesseract not found at {TESSERACT_PATH}. Please check installation.")
     finally:
         if os.path.exists(tmp_path):
             os.unlink(tmp_path)
