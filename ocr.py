@@ -39,7 +39,21 @@ def _tesseract_ocr(image_obj, lang='tur'):
         tmp_path = tmp.name
     
     try:
-        cmd = [TESSERACT_PATH, tmp_path, 'stdout', '-l', lang]
+        print(f"DEBUG: Using Tesseract at: {TESSERACT_PATH}")
+        print(f"DEBUG: File exists check: {os.path.exists(TESSERACT_PATH)}")
+        
+        if not os.path.exists(TESSERACT_PATH):
+            which_result = subprocess.run(['which', 'tesseract'], capture_output=True, text=True)
+            print(f"DEBUG: which tesseract result: {which_result.stdout}")
+            if which_result.returncode == 0:
+                actual_path = which_result.stdout.strip()
+                print(f"DEBUG: Found tesseract at: {actual_path}")
+                cmd = [actual_path, tmp_path, 'stdout', '-l', lang]
+            else:
+                raise Exception(f"Tesseract not found. Tried: {TESSERACT_PATH}")
+        else:
+            cmd = [TESSERACT_PATH, tmp_path, 'stdout', '-l', lang]
+        
         result = subprocess.run(
             cmd,
             capture_output=True,
@@ -49,8 +63,8 @@ def _tesseract_ocr(image_obj, lang='tur'):
         if result.returncode != 0:
             raise Exception(f"Tesseract error: {result.stderr}")
         return result.stdout.strip()
-    except FileNotFoundError:
-        raise Exception(f"Tesseract not found at {TESSERACT_PATH}. Please check installation.")
+    except FileNotFoundError as e:
+        raise Exception(f"Tesseract not found at {TESSERACT_PATH}. Error: {e}")
     finally:
         if os.path.exists(tmp_path):
             os.unlink(tmp_path)
