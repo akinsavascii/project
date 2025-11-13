@@ -23,9 +23,13 @@ def _get_tesseract_path():
         if os.path.exists(path):
             return path
     
-    raise FileNotFoundError("Tesseract not found. Please install tesseract-ocr")
+    return 'tesseract'
 
-TESSERACT_PATH = _get_tesseract_path()
+try:
+    TESSERACT_PATH = _get_tesseract_path()
+except Exception:
+    TESSERACT_PATH = 'tesseract'
+
 POPPLER_PATH = os.getenv('POPPLER_PATH', None)
 
 def _tesseract_ocr(image_obj, lang='tur'):

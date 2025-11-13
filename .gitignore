@@ -142,6 +142,8 @@ uploads/*
 summaries/*
 !summaries/.gitkeep
 .DS_Store
+*.pyc
+__pycache__/
 
 # Spyder project settings
 .spyderproject
