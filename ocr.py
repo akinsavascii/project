@@ -3,9 +3,30 @@ import subprocess
 import tempfile
 from pdf2image import convert_from_path
 from PIL import Image
+import shutil
 
-TESSERACT_PATH = os.getenv('TESSERACT_PATH', '/opt/homebrew/bin/tesseract')
-POPPLER_PATH = os.getenv('POPPLER_PATH', '/opt/homebrew/bin')
+def _get_tesseract_path():
+    tesseract_path = os.getenv('TESSERACT_PATH')
+    if tesseract_path and os.path.exists(tesseract_path):
+        return tesseract_path
+    
+    which_result = shutil.which('tesseract')
+    if which_result:
+        return which_result
+    
+    common_paths = [
+        '/usr/bin/tesseract',
+        '/usr/local/bin/tesseract',
+        '/opt/homebrew/bin/tesseract'
+    ]
+    for path in common_paths:
+        if os.path.exists(path):
+            return path
+    
+    raise FileNotFoundError("Tesseract not found. Please install tesseract-ocr")
+
+TESSERACT_PATH = _get_tesseract_path()
+POPPLER_PATH = os.getenv('POPPLER_PATH', None)
 
 def _tesseract_ocr(image_obj, lang='tur'):
     with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as tmp:
@@ -27,7 +48,8 @@ def _tesseract_ocr(image_obj, lang='tur'):
             os.unlink(tmp_path)
 
 def pdf_to_text(pdf_path, dpi=200):
-    pages = convert_from_path(pdf_path, dpi=dpi, poppler_path=POPPLER_PATH if POPPLER_PATH != '/opt/homebrew/bin' else None)
+    poppler_path = POPPLER_PATH if POPPLER_PATH else None
+    pages = convert_from_path(pdf_path, dpi=dpi, poppler_path=poppler_path)
     texts = []
     for i, page in enumerate(pages):
         text = _tesseract_ocr(page, lang='tur')
