@@ -15,12 +15,10 @@ def _ocr_with_gemini(image_path):
         import google.generativeai as genai
         genai.configure(api_key=GEMINI_KEY)
         
-        # Try multiple models in order of preference
         models_to_try = [
-            'gemini-2.5-flash-live',
-            'models/gemini-2.5-flash-live',
-            'gemini-1.5-flash',
-            'models/gemini-1.5-flash',
+            'gemini-2.0-flash-lite',
+            'gemini-2.0-flash',
+            'gemini-2.5-flash',
         ]
         
         img = Image.open(image_path)
